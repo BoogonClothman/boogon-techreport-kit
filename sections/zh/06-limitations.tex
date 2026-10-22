@@ -1,0 +1,15 @@
+\section{局限}
+\label{sec:limit}
+
+\textbf{篇幅。}单栏宽版心适合 8--20 页的报告；再长就该换双栏，这套模板不提供。
+
+\textbf{会议模板。}NeurIPS、ICLR、ACL 的格式以官方 \texttt{.sty} 为准，本模板不内置，
+也不应该内置：再分发涉及许可问题。
+
+\textbf{数学。}只补了五个容易静默丢失的符号（≥ ≤ ≠ ≈ ∞）；\verb|\mathbb{R}| 与
+\verb|\bm| 仍需自行加载宏包。
+
+\textbf{中文边界。}断行与避头尾交给 \texttt{ctex}，繁体与日韩文未测试。
+
+\textbf{可复现与可复制。}CI 只验证编译、不锁定 TeX Live 版本；Fandol 字体集生成的
+PDF 里中文无法检索或复制，需要可复制 PDF 时改用系统字体集。

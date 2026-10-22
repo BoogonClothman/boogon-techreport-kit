@@ -1,0 +1,66 @@
+\section{Type and Bilingual Support}
+\label{sec:type}
+
+One visual language, two font pipelines. English reports build with pdfLaTeX: T1
+encoding plus \texttt{mathpazo}, so both text and mathematics are URW Palladio, a
+Palatino clone. Chinese reports build with XeLaTeX: \texttt{ctex} handles line breaking
+and punctuation, the text font becomes the OpenType TeX Gyre Pagella, and mathematics
+stays in Pazo.\citep{ctex,texgyre}
+
+The pipelines are not merged because Chinese has no second road. pdfLaTeX cannot break
+CJK lines or load CJK fonts, and what comes out is a PDF with missing glyphs or arbitrary
+breaks. The class therefore refuses \texttt{zh} under pdfLaTeX and tells you the command
+to run. A hard error is much cheaper than a PDF that looks fine and has silently dropped
+characters.
+
+The two font names look like an inconsistency but are two implementations of one design:
+Palladio is Type~1, Pagella is its OpenType redraw. The visible difference is nil; the
+difference in coverage is not. Pagella carries →, ≥ and µ,
+Palladio does not. Under the English pipeline, T1 leaves ≥ ≤ ≠ ≈ ∞ undefined and
+typing them drops the characters \emph{silently}, so the class maps those five to math
+symbols; arrows and unit signs come from \texttt{textcomp} and need no help.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{The two font pipelines. Chinese also picks a character set: \texttt{windows} or
+  \texttt{fandol}.}
+  \label{tab:pipeline}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Item & English & Chinese \\
+    \midrule
+    Engine     & pdfLaTeX           & XeLaTeX \\
+    Text font  & URW Palladio (T1)  & TeX Gyre Pagella \\
+    Math font  & Pazo Math          & Pazo Math \\
+    CJK        & ---                & ctex, \texttt{scheme=plain} \\
+    Encoding   & T1                 & TU + T1 \\
+    Best for   & English, arXiv     & Chinese, mixed text \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Chinese also has to pick a character set. On Windows the system Song typeface looks
+better, selected with \texttt{fontset=windows}; on any machine the bundled Fandol fonts
+always compile, selected with \texttt{fontset=fandol}, at the cost of lighter strokes and
+text that cannot be copied out of the PDF. CI takes the portable option, a personal
+machine takes the pretty one. That is a stated trade-off, not an oversight.
+
+Metadata lives in one place, the smallest convention in the template and the one that
+saves the most time:
+
+\begin{lstlisting}[language=TeX,
+  caption={A typical \texttt{\textbackslash reportsetup}. Every key is optional.},
+  label={lst:setup}]
+\documentclass[logo]{boogonreport}
+\reportsetup{
+  title    = {A Technical Report Template: Design and Usage},
+  author   = {BoogonClothman},
+  number   = {TR-2026-01},
+  version  = {v1.0.0},
+  date     = {2026-10-22},
+}
+\end{lstlisting}
+
+The same definition feeds the title block, the running head, the footer and the PDF
+properties, so a renamed report cannot end up with stale metadata in the file.

@@ -1,0 +1,66 @@
+%% ===========================================================================
+%%  main-en.tex -- English example report (pdfLaTeX)
+%%  Build:  .\build.ps1     or   latexmk -pdf -bibtex main-en.tex
+%%  Copy this file for a new report; replace the metadata and the sections.
+%% ===========================================================================
+\documentclass[logo]{boogonreport}
+
+%% ----------------------------- metadata ------------------------------------
+\reportsetup{
+  title       = {A Technical Report Template: Design and Usage},
+  subtitle    = {Layout decisions, writing rules and tooling in boogonreport v1.0},
+  author      = {BoogonClothman},
+  affiliation = {Boogon},
+  email       = {hello@example.com},
+  link        = {https://github.com/BoogonClothman/boogon-techreport-kit},
+  linktext    = {github.com/BoogonClothman/boogon-techreport-kit},
+  number      = {TR-2026-01},
+  version     = {v1.0.0},
+  date        = {2026-10-22},
+  wordmark    = {BoogonClothman},
+  shorttitle  = {A Technical Report Template},
+  keywords    = {technical report, LaTeX, typography, bilingual},
+}
+
+%% ----------------------------- figures -------------------------------------
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This template folds the layout decisions of a technical report into a single class
+file: A4 single column, Palatino, pipe-separated captions, three-rule tables with
+best/second markings, code listings, appendices and references, plus a one-word
+switch between Chinese and English. The report you are reading is also the
+specification: every section explains why a choice was made and what the template
+deliberately does not do. Everything builds with one command on any machine with a
+stock TeX~Live installation.
+\keywords{technical report, LaTeX, typography, bilingual}
+\end{abstract}
+
+\input{figures/en/hero}
+
+\newpage
+\tableofcontents
+\newpage
+
+%% ----------------------------- body -----------------------------------------
+\input{sections/en/01-introduction}
+\input{sections/en/02-layout}
+\input{sections/en/03-typography}
+\input{sections/en/04-figures}
+\input{sections/en/05-engineering}
+\input{sections/en/06-limitations}
+
+%% ----------------------------- references -----------------------------------
+\bibliography{refs}
+
+%% ----------------------------- appendix -------------------------------------
+\appendix
+\input{sections/en/90-appendix}
+
+\end{document}

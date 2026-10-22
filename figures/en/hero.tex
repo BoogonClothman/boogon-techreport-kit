@@ -1,0 +1,35 @@
+%% Hero figure: build time for one report.
+%% Measured with latexmk (two passes plus bibtex) on TeX Live 2026, Windows 11.
+%% Re-measure on your machine and update the coordinates; do not inherit numbers.
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      ybar,
+      bar width=26pt,
+      width=0.86\textwidth,
+      height=5.6cm,
+      enlarge x limits=0.28,
+      ymin=0,
+      ymax=20,
+      ylabel={Build time (s)},
+      ylabel style={font=\small},
+      symbolic x coords={English, Chinese, Starter},
+      xtick=data,
+      xticklabel style={font=\small},
+      tick style={draw=none},
+      ymajorgrids,
+      grid style={bgrule!45},
+      axis line style={bgrule},
+      nodes near coords,
+      nodes near coords style={font=\scriptsize, color=bgink},
+    ]
+      \addplot[fill=bgbrand, draw=none] coordinates
+        {(English,8.5) (Chinese,15.7) (Starter,1.3)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Full build time on one machine, including two passes and the bibliography.
+  The Chinese report takes about twice as long because it goes through XeLaTeX and
+  ctex, still well inside a single compile-and-check cycle.}
+  \label{fig:hero}
+\end{figure}

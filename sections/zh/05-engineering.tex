@@ -1,0 +1,55 @@
+\section{构建与发布}
+\label{sec:build}
+
+仓库里只有三类文件：类、内容、工程脚本。\cref{fig:arch} 已经画过它们的关系，
+这里的重点是让「换一台机器」不产生额外心智负担。
+
+\subsection{本地构建}
+
+Windows 上用 \texttt{build.ps1}，macOS 与 Linux 上用 \texttt{Makefile}，两者
+都调用 \texttt{latexmk} 完成两遍编译与参考文献。脚本会自动判断语言：英文走 pdfLaTeX，
+中文走 XeLaTeX，因此不需要记「这份文件该用哪个引擎」。
+
+\begin{lstlisting}[language=bash,
+  caption={常用构建命令。给出 \texttt{-Job} 时只构建其中一份。},
+  label={lst:build}]
+./build.ps1                 # 两份示例都构建
+./build.ps1 -Job main-zh    # 只构建中文示例
+./build.ps1 -Clean          # 只清理中间文件
+./build.ps1 -Watch          # 改一行编译一次
+make en                     # macOS / Linux
+\end{lstlisting}
+
+\subsection{持续集成}
+
+CI 做两件事：证明干净机器能编译，以及把 PDF 留档。两个 job 并行跑，英文用
+pdfLaTeX、中文用 XeLaTeX 加 Fandol 字体集；任何 push 都会编译，并把成品作为
+构建产物（artifact）上传。打 tag 时额外生成一个 Release，附上两份 PDF。
+
+\begin{lstlisting}[language=yaml,
+  caption={CI 的关键片段。中文任务通过 \texttt{\textbackslash PassOptionsToClass} 注入 \texttt{fandol} 字体集，避免依赖宿主系统字体。},
+  label={lst:ci}]
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - job: main-en
+            engine: pdflatex
+          - job: main-zh
+            engine: xelatex
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ${{ matrix.job }}.tex
+\end{lstlisting}
+
+CI 能保证的只是「编译通过」，它不知道表格有没有溢出、图有没有孤零零占一页。
+排版仍然需要人眼过一遍，这一条被写进了发布检查清单。
+
+\subsection{版本}
+
+版本号写进 \verb|\reportsetup{version={...}}|，与 git tag 保持一致。改版时
+同时更新 PDF 目视检查、\texttt{CHANGELOG.md} 和 Release 说明——这三件事
+任何一件单独做，都会在半年后变成谜。

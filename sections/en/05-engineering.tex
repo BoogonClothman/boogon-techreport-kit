@@ -1,0 +1,56 @@
+\section{Building and Releasing}
+\label{sec:build}
+
+The repository holds three kinds of files: the class, the content, and the tooling.
+\Cref{fig:arch} already showed how they connect; what matters here is that moving to a
+new machine should cost no thinking.
+
+\subsection{Local builds}
+
+On Windows use \texttt{build.ps1}; on macOS and Linux use the \texttt{Makefile}. Both
+drive \texttt{latexmk} through two passes and the bibliography. The script picks the
+engine from the language, so you never have to remember which file needs XeLaTeX.
+
+\begin{lstlisting}[language=bash,
+  caption={Common build commands. With \texttt{-Job}, only one report is built.},
+  label={lst:build}]
+./build.ps1                 # build both example reports
+./build.ps1 -Job main-en    # English only
+./build.ps1 -Clean          # remove intermediates
+./build.ps1 -Watch          # rebuild on save
+make en                     # macOS / Linux
+\end{lstlisting}
+
+\subsection{Continuous integration}
+
+CI does two things: it proves that a clean machine can build the PDF, and it keeps a copy
+of the result. Two jobs run in parallel, English on pdfLaTeX and Chinese on XeLaTeX with
+the Fandol character set. Every push builds and uploads the PDF as an artifact; a tag also
+creates a release with both reports attached.
+
+\begin{lstlisting}[language=yaml,
+  caption={The essential CI fragment. The Chinese job injects \texttt{fandol} through \texttt{\textbackslash PassOptionsToClass} so it never depends on host fonts.},
+  label={lst:ci}]
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - job: main-en
+          - job: main-zh
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ${{ matrix.job }}.tex
+\end{lstlisting}
+
+CI proves compilation, nothing more. It cannot see an overfull table or a figure stranded
+on its own page; layout still needs a human pass, which is why the release checklist
+exists.
+
+\subsection{Versions}
+
+The version lives in \verb|\reportsetup{version={...}}| and matches the git tag. Bump it
+together with the visual check, the changelog and the release notes. Done separately,
+any one of those three becomes a mystery six months later.

@@ -1,0 +1,84 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.job }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - job: main-en
+            root: main-en.tex
+            xelatex: false
+          - job: main-zh
+            root: ci-build-zh.tex
+            xelatex: true
+    steps:
+      - uses: actions/checkout@v4
+
+      # 中文任务通过类选项注入 fandol 字体集：Fandol 随 TeX Live 分发，
+      # 因此不依赖宿主系统是否装了宋体/黑体。
+      - name: Prepare portable Chinese build
+        if: matrix.xelatex
+        run: |
+          printf '%s\n' \
+            '\PassOptionsToClass{fandol}{boogonreport}%' \
+            '\input{main-zh.tex}' > ci-build-zh.tex
+
+      - name: Compile
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ${{ matrix.root }}
+          latexmk_use_xelatex: ${{ matrix.xelatex }}
+          latexmk_shell_escape: false
+          args: -interaction=nonstopmode -halt-on-error -file-line-error
+
+      - name: Normalize output name
+        run: |
+          if [ "${{ matrix.job }}" = "main-zh" ]; then
+            mv ci-build-zh.pdf main-zh.pdf
+          fi
+          ls -la ./*.pdf
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.job }}-pdf
+          path: ${{ matrix.job }}.pdf
+          if-no-files-found: error
+
+      - name: Keep PDFs for the release job
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.job }}
+          path: ${{ matrix.job }}.pdf
+
+  release:
+    name: release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: dist
+      - run: ls -la dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.pdf
+          generate_release_notes: true
+          draft: false

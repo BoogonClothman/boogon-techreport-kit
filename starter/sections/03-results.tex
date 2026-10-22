@@ -1,0 +1,24 @@
+\section{结果}
+\label{sec:results}
+
+\fixme{补：主结果、对比与消融}
+
+主结果先给一张表，逐项写清评测设置（shots、指标、是否重跑基线）。
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{主结果。最优值加粗，次优下划线。}
+  \label{tab:main}
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+    方法 & 指标 A & 指标 B \\
+    \midrule
+    基线            & 0.00 & 0.00 \\
+    本文方法        & \best{0.00} & \best{0.00} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\Cref{tab:main} 里的数字必须能在实验日志里找到出处。失败与回滚也写在这里，
+比藏起来可信。

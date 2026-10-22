@@ -1,0 +1,46 @@
+\section{Figures, Tables and Numbers}
+\label{sec:figure}
+
+Tables are three-rule \texttt{booktabs} tables: top, middle, bottom, no vertical rules.
+Table captions sit above the table, figure captions below the figure, and both separate
+the label from the text with a pipe (\texttt{Table 1 | ...}). Best results are set in
+bold (\verb|\best{}|), second best underlined (\verb|\second{}|), and the caption says
+what the markings mean so the reader never has to look back at the text.
+
+Every figure and table is referenced from the body, or it is deleted. Section references
+use \verb|\secref{}|, which yields ``section 3'' in English and the idiomatic
+Chinese phrasing (number before the noun) in Chinese mode; figures and tables use
+\verb|\cref{}|. Both go through hyperref, so the reference is a working link in the PDF.
+
+\Cref{fig:arch} draws the repository structure with TikZ directly in the document. There
+is no external image to lose, and changing the structure means changing code rather than
+redrawing a figure in another tool.
+
+\input{figures/en/architecture}
+
+Numbers are more error-prone than fonts, because a mistake never raises an error; it only
+confuses the reader. \Cref{tab:numbers} lists the cases we actually got wrong.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Number conventions. The middle column is the rendered result, the right one
+  the markup that produces it.}
+  \label{tab:numbers}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Case & Rendered & Source \\
+    \midrule
+    Thousands      & 32,768        & \texttt{32\{,\}768} \\
+    Multiplication & 8$\times$H100 & \texttt{8\$\textbackslash times\$H100} \\
+    Value and unit & 38\,ms        & \texttt{38\textbackslash,ms} \\
+    Percent        & 62.4\%        & \texttt{62.4\textbackslash\%} \\
+    Precision      & 62.4 and 61.0 & never mix in 62.40 \\
+    Improvement    & +2.1 points over the 7B baseline & name the baseline \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The third row is the one people skip. \texttt{38ms} can break across lines, leaving
+``38'' and ``ms'' looking like two separate things; \verb|38\,ms| binds the number to its
+unit with a thin space and survives line breaking.

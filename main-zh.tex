@@ -1,0 +1,64 @@
+%% ===========================================================================
+%%  main-zh.tex -- 中文示例报告（用 XeLaTeX 编译）
+%%  构建：.\build.ps1        或   xelatex main-zh.tex 两遍
+%%  这份文件同时是模板，新报告复制它，替换正文与元信息即可。
+%% ===========================================================================
+\documentclass[logo, zh]{boogonreport}
+
+%% ----------------------------- 元信息 --------------------------------------
+%% 只在这里写一次：标题、作者、编号、版本、链接。PDF 元数据会自动同步。
+\reportsetup{
+  title       = {技术报告模板：设计与用法},
+  subtitle    = {boogonreport v1.0 的版面决策、排版规范与工程化},
+  author      = {BoogonClothman},
+  affiliation = {Boogon},
+  email       = {hello@example.com},
+  link        = {https://github.com/BoogonClothman/boogon-techreport-kit},
+  linktext    = {github.com/BoogonClothman/boogon-techreport-kit},
+  number      = {TR-2026-01},
+  version     = {v1.0.0},
+  date        = {2026-10-22},
+  wordmark    = {BoogonClothman},
+  shorttitle  = {技术报告模板：设计与用法},
+  keywords    = {技术报告, LaTeX, 排版, 双语},
+}
+
+%% ----------------------------- 绘图 ----------------------------------------
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+这份模板把一份技术报告的排版决策收进一个类文件：A4 单栏、Palatino 正文、
+竖线图注、三线表与最优值标记、代码块、附录与参考文献，并且用一条命令切换
+中英文。示例报告本身说明每个部件为什么这样设计，以及哪些事情这套模板
+刻意不做。全部内容可用一条命令构建，产物在任意装了 TeX Live 的机器上一致。
+\keywords{技术报告，LaTeX，排版规范，中英双语}
+\end{abstract}
+
+\input{figures/zh/hero}
+
+\newpage
+\tableofcontents
+\newpage
+
+%% ----------------------------- 正文 ----------------------------------------
+\input{sections/zh/01-introduction}
+\input{sections/zh/02-layout}
+\input{sections/zh/03-typography}
+\input{sections/zh/04-figures}
+\input{sections/zh/05-engineering}
+\input{sections/zh/06-limitations}
+
+%% ----------------------------- 参考文献 ------------------------------------
+\bibliography{refs}
+
+%% ----------------------------- 附录 ----------------------------------------
+\appendix
+\input{sections/zh/90-appendix}
+
+\end{document}

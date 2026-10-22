@@ -1,0 +1,63 @@
+\section{Options and Commands}
+\label{app:cheatsheet}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Class options, given in the square brackets of
+  \texttt{\textbackslash documentclass[...]\{boogonreport\}}.}
+  \label{tab:options}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Option & Effect \\
+    \midrule
+    \texttt{zh}          & Chinese: font pipeline, captions and references (XeLaTeX) \\
+    \texttt{logo} / \texttt{nologo} & show or hide the brand band \\
+    \texttt{times}       & switch body and math to Times \\
+    \texttt{numeric}     & numeric citations \texttt{[1]} \\
+    \texttt{nonumbering} & unnumbered sections, for white papers \\
+    \texttt{leftalign}   & left-aligned title block \\
+    \texttt{draft}       & line numbers and visible \verb|\todo{}| \\
+    \texttt{fandol}      & portable Chinese character set \\
+    \texttt{winfonts}    & Windows system fonts for Chinese \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Common commands and environments.}
+  \label{tab:commands}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Command & Purpose \\
+    \midrule
+    \verb|\reportsetup{...}| & title, author, number, version, links, wordmark \\
+    \verb|\keywords{...}|    & keywords; works inside or after the abstract \\
+    \verb|\secref{...}|      & ``section 3''; idiomatic Chinese phrasing in zh mode \\
+    \verb|\cref{...}|        & figure and table references \\
+    \verb|\appref{...}|      & appendix references, ``appendix A'' \\
+    \verb|\best{}| / \verb|\second{}| & best in bold / second underlined \\
+    \texttt{contributions}   & compact list of contributions \\
+    \verb|\todo{}| / \verb|\fixme{}| & draft markers, visible only in \texttt{draft} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Authors and Acknowledgements}
+\label{app:authors}
+
+\textbf{Maintainer.} BoogonClothman designs and maintains the template, including the
+class, the examples, the documentation and the build pipeline.
+
+\textbf{Acknowledgements.} The layout language owes a debt to the long practice of public
+technical reports, in particular the way the DeepSeek and Qwen reports put one result on
+the first page. The prose rules follow Bringhurst and the \LaTeX{} community's
+conventions.\citep{bringhurst2013elements,mittelbach2023companion}
+
+\textbf{License.} The repository is released under the MIT license: use it, change it,
+ship it. Fonts travel with TeX Live and are embedded under their own LPPL/GPL-style
+licenses.
+
+\textbf{Source.}\ \url{https://github.com/BoogonClothman/boogon-techreport-kit}

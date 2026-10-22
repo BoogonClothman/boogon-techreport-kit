@@ -1,0 +1,41 @@
+\section{图表与数字}
+\label{sec:figure}
+
+表格一律用 \texttt{booktabs} 的三线表：顶线、中线、底线，不加竖线。表题在表
+上方，图题在图下方，两者都用竖线把标签和说明分开（\texttt{表 1 | ...}）。
+最优值加粗（\verb|\best{}|），次优下划线（\verb|\second{}|），并在题注里
+写明含义，读者不必回头翻正文。
+
+每张图表都要在正文里被引用，否则删掉它。中文里章节用 \verb|\secref{}|，
+写成「第 3 节」；图表用 \verb|\cref{}|，写成「图 1」「表 2」。这样改章节顺序
+时不会留下错误的「第 3 节」。
+
+图~\ref{fig:arch} 是仓库结构与构建链路，用 TikZ 直接画在文档里，不依赖外部
+图片，改结构时改代码即可。
+
+\input{figures/zh/architecture}
+
+数字的写法比字体更容易出问题，因为错误不会报错，只会让读者困惑。表~\ref{tab:numbers}
+是我们在项目里实际踩过的几处。
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{数字写法约定。中间是排版后的样子，右边是应当写进源码的形式。}
+  \label{tab:numbers}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    场景 & 排版结果 & 源码写法 \\
+    \midrule
+    千分位        & 32,768      & \texttt{32\{,\}768} \\
+    乘号          & 8$\times$H100 & \texttt{8\$\textbackslash times\$H100} \\
+    数值与单位    & 38\,ms      & \texttt{38\textbackslash,ms} \\
+    百分号        & 62.4\%      & \texttt{62.4\textbackslash\%} \\
+    精度统一      & 62.4 与 61.0 & 同一张表不要混用 62.40 \\
+    提升幅度      & +2.1 points over the 7B baseline & 写清基线，不要只写 +2.1 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+第三行常被忽略：\texttt{38ms} 在断行时可能被拆成两行，读起来像 38 和 ms 两个
+东西；\verb|38\,ms| 用一个细空格把数值和单位绑在一起，断行时不会被拆开。

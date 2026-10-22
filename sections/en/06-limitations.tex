@@ -1,0 +1,27 @@
+\section{Limitations}
+\label{sec:limit}
+
+\textbf{Length.} A single wide column suits reports of roughly 8--20 pages. Beyond that a
+reader wants two columns or tighter setting, which this template does not provide.
+
+\textbf{Conference templates.} NeurIPS, ICLR and ACL ship their own \texttt{.sty} files.
+This template neither bundles nor should bundle them: redistribution is a licensing
+question, and the correct move is to fetch the official file.
+
+\textbf{Mathematics.} Only five relation signs that would otherwise vanish silently
+(greater-or-equal, less-or-equal, not-equal, approximately, infinity) are mapped.
+Anything more exotic stays a LaTeX command:
+\verb|\mathbb{R}| needs \texttt{amssymb}, \verb|\bm| needs \texttt{bm}. The template does
+not guess.
+
+\textbf{Chinese edge cases.} Line breaking, punctuation kerning and forbidden line starts
+are delegated to \texttt{ctex}. Traditional Chinese, Japanese and Korean are untested, and
+font fallback in mixed-script paragraphs depends on the chosen character set.
+
+\textbf{Reproducibility.} CI checks compilation but does not pin the TeX Live release, so
+the same source may shift by a line or two across years of package updates. Strict
+reproduction requires pinning the image.
+
+\textbf{Copyable text.} PDFs built with the Fandol character set contain Chinese text that
+cannot be searched or copied. That is the price of portability; switch to the system
+character set when the PDF must be selectable.

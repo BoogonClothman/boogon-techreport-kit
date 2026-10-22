@@ -1,0 +1,60 @@
+\section{选项与命令速查}
+\label{app:cheatsheet}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{类选项。写在 \texttt{\textbackslash documentclass[...]\{boogonreport\}} 的方括号里。}
+  \label{tab:options}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    选项 & 作用 \\
+    \midrule
+    \texttt{zh}          & 中文报告：切字体管线、题注与交叉引用文案（需 XeLaTeX）\\
+    \texttt{logo} / \texttt{nologo} & 首屏是否显示品牌带（默认显示）\\
+    \texttt{times}       & 正文与数学换成 Times 家族 \\
+    \texttt{numeric}     & 参考文献改为数字引用 \texttt{[1]} \\
+    \texttt{nonumbering} & 章节不编号，适合白皮书 \\
+    \texttt{leftalign}   & 标题块左对齐，默认居中 \\
+    \texttt{draft}       & 行号 + \verb|\todo{}| 可见 \\
+    \texttt{fandol}      & 中文用 Fandol 字体集（跨平台可编译）\\
+    \texttt{winfonts}    & 中文用 Windows 系统字体 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{常用命令与环境。}
+  \label{tab:commands}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    命令 & 用途 \\
+    \midrule
+    \verb|\reportsetup{...}| & 标题、作者、编号、版本、链接与文字标 \\
+    \verb|\keywords{...}|    & 关键词，放在摘要内或摘要后都能正常排版 \\
+    \verb|\secref{...}|      & 中文输出「第 3 节」，英文输出「section 3」\\
+    \verb|\cref{...}|        & 图表引用，中文输出「图 1」「表 2」\\
+    \verb|\appref{...}|      & 附录引用，输出「附录 A」\\
+    \verb|\best{}| / \verb|\second{}| & 最优值加粗 / 次优值下划线 \\
+    \texttt{contributions}   & 紧凑的贡献点列表 \\
+    \verb|\todo{}| / \verb|\fixme{}| & 草稿标记，仅 \texttt{draft} 下可见 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{作者与致谢}
+\label{app:authors}
+
+\textbf{维护。}BoogonClothman 设计并维护本模板，包括类文件、示例、文档与构建
+流程。
+
+\textbf{致谢。}模板的版式语言受益于公开技术报告的长期实践，尤其是 DeepSeek 与
+Qwen 系列报告对「一页讲清一件事」的排版处理；本书面语言与字体选择则参照
+Bringhurst 与 \LaTeX{} 社区的通行做法\citep{bringhurst2013elements,mittelbach2023companion}。
+
+\textbf{许可。}本仓库以 MIT 许可发布，可商用、可修改、可再分发。字体随
+TeX Live 分发，按各自的 LPPL/GPL 类许可嵌入 PDF。
+
+\textbf{获取。}\url{https://github.com/BoogonClothman/boogon-techreport-kit}

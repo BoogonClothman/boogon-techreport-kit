@@ -1,0 +1,27 @@
+﻿# 鏋勫缓浜х墿
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.run.xml
+*.synctex(busy)
+
+# 鎴愬搧 PDF 浣滀负 Release 闄勪欢鍙戝竷锛屼笉杩涚増鏈簱锛堥瑙堝浘杩涳級
+main-en.pdf
+main-zh.pdf
+starter/report.pdf
+
+# 缂栬緫鍣ㄤ笌绯荤粺
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp

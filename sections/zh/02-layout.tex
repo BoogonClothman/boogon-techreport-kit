@@ -1,0 +1,40 @@
+\section{版面}
+\label{sec:layout}
+
+版面是 A4 单栏，左右边距 25\,mm，上边距 30\,mm，下边距 32\,mm。版心宽度因此是
+
+\begin{equation}
+  W = 210\,\text{mm} - 2 \times 25\,\text{mm} = 160\,\text{mm}
+  \label{eq:width}
+\end{equation}
+
+式~\eqref{eq:width} 在 11\,pt 的 Palatino 下大约对应每行 75 个字符，比
+Bringhurst 推荐的 66 字符略宽\citep{bringhurst2013elements}。这是有意的：
+技术报告里公式、代码和宽表格比纯散文多，版心窄一分，公式就要多折一行。
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{版面参数。数值与 \texttt{boogonreport.cls} 中的设定一一对应。}
+  \label{tab:layout}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    项目 & 取值 & 理由 \\
+    \midrule
+    纸型          & A4（210 $\times$ 297\,mm） & 国内打印与 arXiv 都接受 \\
+    左右边距      & 25\,mm                     & 与常见预印本一致 \\
+    上 / 下边距   & 30\,mm / 32\,mm            & 给页眉页脚留位 \\
+    正文字号      & 11\,pt                     & 屏幕阅读与打印都够 \\
+    行距          & 单倍（Palatino 自带较大 x-height） & 不必再拉开 \\
+    段首          & 不缩进，段间 0.5 行        & 块状段落利于扫读 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+段落不缩进、段间留半行空白。中文排版传统是首行缩进两字，但技术报告多在屏幕上
+阅读，块状段落更利于跳读与定位。如果目标渠道要求缩进，在导言区加一句
+\verb|\setlength{\parindent}{2em}| 并把 \verb|\parskip| 归零即可。
+
+之所以选单栏，是因为双栏在屏幕上必须放大才能读，而技术报告的主要读者就在屏幕上。
+代价同样明确：同样的页数，单栏装不下双栏那么多字，所以这套模板适合 8--20 页的
+报告，不适合长篇学位论文。

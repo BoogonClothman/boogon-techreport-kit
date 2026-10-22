@@ -1,0 +1,43 @@
+\section{Layout}
+\label{sec:layout}
+
+The page is A4, single column, with 25\,mm side margins, a 30\,mm top margin and
+32\,mm at the bottom. The text width is therefore
+
+\begin{equation}
+  W = 210\,\text{mm} - 2 \times 25\,\text{mm} = 160\,\text{mm}
+  \label{eq:width}
+\end{equation}
+
+At 11\,pt in Palatino this is about 75 characters per line, somewhat wider than the 66
+characters Bringhurst recommends.\citep{bringhurst2013elements} The choice is
+deliberate: technical reports carry more equations, code and wide tables than prose, and
+every millimetre of measure costs another folded line.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Page parameters. Each row maps to a setting in \texttt{boogonreport.cls}.}
+  \label{tab:layout}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Item & Value & Why \\
+    \midrule
+    Paper        & A4 (210 $\times$ 297\,mm) & accepted by printers and arXiv \\
+    Side margins & 25\,mm                   & matches common preprints \\
+    Top / bottom & 30\,mm / 32\,mm          & room for running head and folio \\
+    Body size    & 11\,pt                   & readable on screen and paper \\
+    Leading      & single                   & Palatino has a large x-height \\
+    Paragraphs   & no indent, half-line gap & block paragraphs scan faster \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Paragraphs are set flush without indentation, separated by half a line. Chinese
+typographic tradition indents the first line instead; if your venue wants that, set
+\verb|\parindent| to \verb|2em| and drop \verb|\parskip| to zero in the preamble.
+
+The single column is a consequence of where reports are read. Two columns require zooming
+on screen, and screen is where most readers meet a technical report. The cost is equally
+clear: a single column fits less text per page, so the template targets reports of roughly
+8--20 pages, not theses.

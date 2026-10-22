@@ -1,0 +1,41 @@
+%% 仓库结构与构建链路示意图（TikZ，无外部图片依赖）
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+      font=\small,
+      box/.style={draw=bgrule, rounded corners=2pt, fill=bgbrand!4,
+                  align=center, inner sep=4pt, minimum height=8mm,
+                  minimum width=40mm},
+      core/.style={draw=bgbranddeep, rounded corners=3pt, fill=bgbrand!12,
+                   align=center, inner sep=6pt, minimum height=26mm,
+                   minimum width=38mm},
+      outbox/.style={draw=bgrule, rounded corners=2pt, fill=black!4,
+                  align=center, inner sep=4pt, minimum height=9mm,
+                  minimum width=34mm},
+      arr/.style={-{Latex[length=2mm]}, bgrule!90, thick},
+      note/.style={font=\scriptsize, text=bgink, align=center},
+      node distance=4mm and 16mm,
+    ]
+    \node[box] (mains) {main-zh.tex / main-en.tex};
+    \node[box, below=4mm of mains] (secs) {sections/};
+    \node[box, below=4mm of secs] (figs) {figures/};
+    \node[box, below=4mm of figs] (bib) {refs.bib};
+
+    \node[core, right=18mm of secs, yshift=-4mm] (cls)
+      {\textbf{boogonreport.cls}\\[2pt]{\scriptsize 文档类}};
+
+    \node[outbox, right=16mm of cls, yshift=12mm] (pdf) {main-zh.pdf / main-en.pdf};
+    \node[outbox, right=16mm of cls, yshift=-12mm] (ci) {GitHub Actions};
+
+    \draw[arr] (mains.east) -- (cls.west |- mains.east);
+    \draw[arr] (bib.east) -- (cls.west |- bib.east);
+    \draw[arr] (cls.east) -- ++(6mm,0) |- (pdf.west);
+    \draw[arr] (cls.east) -- ++(6mm,0) |- (ci.west);
+
+    \node[note, below=6mm of cls] {构建：build.ps1 或 latexmk\\英文 pdflatex，中文 xelatex};
+  \end{tikzpicture}
+  \caption{仓库结构与构建链路。内容与类文件分离：换项目时只复制
+  \texttt{boogonreport.cls} 与自己的 \texttt{sections/}、\texttt{figures/}，
+  构建脚本与 CI 保持不变。}
+  \label{fig:arch}
+\end{figure}

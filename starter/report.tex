@@ -1,0 +1,42 @@
+%% ===========================================================================
+%%  report.tex -- 空白骨架
+%%  用法：把这个目录（连同 boogonreport.cls）复制到你自己的项目，改元信息、
+%%  改章节，删掉用不到的输入。构建：.\build.ps1 -Job starter 或 make starter。
+%% ===========================================================================
+\documentclass[logo, zh]{boogonreport}
+
+\reportsetup{
+  title       = {在这里写报告标题},
+  subtitle    = {可选副标题，一行讲清范围},
+  author      = {你的名字},
+  affiliation = {单位或独立研究者},
+  email       = {you@example.com},
+  link        = {https://github.com/you/repo},
+  number      = {TR-2026-002},
+  version     = {v0.1},
+  date        = {2026-10-22},
+  wordmark    = {YOUR LAB},
+  shorttitle  = {页眉用的短标题},
+  keywords    = {关键词一, 关键词二},
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+五句话：做了什么、规模多大、怎么做的、赢在哪、产物在哪拿。不要写「性能优异」
+这类没有信息量的形容词。
+\keywords{关键词一，关键词二}
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\input{sections/01-introduction}
+\input{sections/02-method}
+\input{sections/03-results}
+
+\bibliography{refs}
+
+\end{document}

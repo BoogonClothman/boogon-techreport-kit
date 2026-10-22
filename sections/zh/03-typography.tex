@@ -1,0 +1,63 @@
+\section{字体与双语}
+\label{sec:type}
+
+同一份观感背后是两条字体管线。英文报告走 pdfLaTeX：T1 编码加 \texttt{mathpazo}，
+正文与数学都是 URW Palladio，也就是 Palatino 的克隆。中文报告走 XeLaTeX：
+\texttt{ctex} 负责断行与标点，正文换成 OpenType 的 TeX Gyre Pagella，
+数学仍是 Pazo\citep{ctex,texgyre}。
+
+之所以不把两条管线合并成一条，是因为中文没有第二条路可走。pdfLaTeX 处理
+CJK 断行与字体会得到一份缺字或乱断的 PDF，所以类文件在检测到
+\texttt{zh} 与 pdfLaTeX 同时出现时会直接报错，并告诉你该敲哪条命令——报错
+比一份看起来正常、实则掉字的 PDF 便宜得多。
+
+两个字体名看起来分裂，其实是同一设计的两份实现：Palladio 是 Type~1，
+Pagella 是它的 OpenType 重绘，肉眼几乎分不出来。区别在于字符覆盖——Pagella
+带 →、≥、µ 这些字符，Palladio 不带。英文管线下
+T1 编码对 ≥ ≤ ≠ ≈ ∞ 没有定义，输入这些字符会被\textbf{静默丢弃}，
+所以类里给这五个字符补了数学映射；箭头和单位符号由 \texttt{textcomp} 自带，
+无需重复声明。
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{两条字体管线。中文字体集另有 \texttt{windows} 与 \texttt{fandol} 两种选择。}
+  \label{tab:pipeline}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    项目 & 英文管线 & 中文管线 \\
+    \midrule
+    引擎        & pdfLaTeX          & XeLaTeX \\
+    文本字体    & URW Palladio（T1）& TeX Gyre Pagella \\
+    数学字体    & Pazo Math         & Pazo Math \\
+    中文支持    & ---               & ctex，\texttt{scheme=plain} \\
+    页面编码    & T1                & TU + T1 \\
+    适用场景    & 英文报告、arXiv   & 中文报告、中英混排 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+中文还有一份「汉字字体集」要选：Windows 下可以用系统宋体
+（\texttt{fontset=windows}），跨平台则用 TeX Live 自带的 Fandol
+（\texttt{fontset=fandol}）。后者任何机器都能编，代价是字形偏细、PDF 里
+文字不易复制；前者更好看，但只在装了对应系统字体的机器上成立。CI 用前者之外的
+选项保证可编译，个人机器用系统字体保证好看——这是可复现与好看之间的一次明确
+取舍，而不是疏忽。
+
+元信息也收在一处，这是模板里最小但最省事的约定：
+
+\begin{lstlisting}[language=TeX,
+  caption={\texttt{\textbackslash reportsetup} 的典型写法。所有键都可省略，省略时用默认值。},
+  label={lst:setup}]
+\documentclass[logo, zh]{boogonreport}
+\reportsetup{
+  title    = {技术报告模板：设计与用法},
+  author   = {BoogonClothman},
+  number   = {TR-2026-01},
+  version  = {v1.0.0},
+  date     = {2026-10-22},
+}
+\end{lstlisting}
+
+同一处定义会同时写进页眉、页脚、PDF 元数据与页脚的报告编号，因此不存在
+「封面改了、PDF 属性没改」这类不一致。

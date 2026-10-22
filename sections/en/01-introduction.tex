@@ -1,0 +1,30 @@
+\section{Introduction}
+\label{sec:intro}
+
+A technical report earns its keep by being checkable: the reader follows a number to an
+experiment, and the experiment to a line of code. Typography does not create that value,
+but it decides whether anyone keeps reading, and whether the author re-derives the same
+layout decisions for every new report.
+
+Three things kept costing us time. First, every blank document meant re-tuning margins,
+font sizes, caption punctuation and table rules, and no two reports came out alike.
+Second, mixed Chinese and English kept tripping over engines: Chinese needs XeLaTeX for
+line breaking, English is cheapest with pdfLaTeX, and both must look like the same
+document. Third, numbers were written without a convention, so a table could contain
+both \texttt{62.4} and \texttt{62.40} and the reader had no way to tell which was a typo.
+
+This template addresses those three problems. Our contributions are:
+
+\begin{contributions}
+  \item a single class file, \texttt{boogonreport.cls}, that carries every layout
+        decision: title block, abstract, captions, three-rule tables, code listings,
+        references and appendices;
+  \item one \texttt{zh} option that switches both the font pipeline and the
+        localised strings, replacing a page of \verb|\renewcommand| boilerplate;
+  \item build scripts and CI that produce the same PDF from any machine with TeX~Live.
+\end{contributions}
+
+The report is organised as follows: \secref{sec:layout} covers the page geometry,
+\secref{sec:type} the two font pipelines, \secref{sec:figure} the rules for figures,
+tables and numbers, \secref{sec:build} the build and release flow, and
+\secref{sec:limit} what the template does not attempt.
