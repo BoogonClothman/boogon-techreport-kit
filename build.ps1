@@ -4,10 +4,11 @@
     Build the technical reports: pdfLaTeX for English, XeLaTeX for Chinese.
 
 .DESCRIPTION
-    Builds both example reports (main-en, main-zh) unless -Job is given. The engine
-    is chosen from the file name, so you never have to remember which report needs
-    which engine. If TeX Live is not on PATH, pass -TeXBin or install a TeX
-    distribution.
+    Builds both example reports (main-en, main-zh) unless -Job is given. -Job also
+    takes any other report name: -Job report builds report.tex. The engine is read
+    from the report's own \documentclass options ("zh" means XeLaTeX), so a Chinese
+    report can be called anything. If TeX Live is not on PATH, pass -TeXBin or
+    install a TeX distribution.
 
     This script is deliberately ASCII-only: Windows PowerShell 5.1 reads BOM-less
     files in the ANSI code page, and Chinese string literals in such a file break
@@ -20,11 +21,15 @@
     .\build.ps1 -Job main-zh -Watch
 
 .EXAMPLE
+    .\build.ps1 -Job report -Clean
+
+.EXAMPLE
     .\build.ps1 -Clean
 #>
 [CmdletBinding()]
 param(
-    [ValidateSet('all', 'main-en', 'main-zh', 'starter')]
+    # Any report name: 'main-en', 'main-zh', 'starter', or your own file.
+    # 'all' builds the two example reports.
     [string]$Job = 'all',
 
     [switch]$Clean,
@@ -58,9 +63,25 @@ function Resolve-TeXBin {
 }
 
 function Get-Engine {
-    param([string]$Name)
-    # The Chinese report and the starter (also Chinese) need XeLaTeX.
-    if ($Name -match 'zh' -or $Name -eq 'starter') { return 'xelatex' }
+    param([string]$Name, [string]$Dir)
+
+    # Decide from the report itself. The class switches to the Chinese pipeline
+    # with the "zh" option, and that option is exactly what forces XeLaTeX, so
+    # reading it beats guessing from the file name: a Chinese report may be
+    # called report.tex, and a file whose name contains "zh" may be English.
+    $tex = Join-Path $Dir "$Name.tex"
+    if (Test-Path $tex) {
+        # Decode as UTF-8 explicitly: Windows PowerShell 5.1 would otherwise read
+        # a BOM-less file in the ANSI code page and garble the Chinese text.
+        $text = [System.IO.File]::ReadAllText($tex, [System.Text.Encoding]::UTF8)
+        if ($text -match '\\documentclass\s*\[([^\]]*)\]') {
+            if ($Matches[1] -match '(^|,)\s*zh\s*(,|$)') { return 'xelatex' }
+            return 'pdflatex'
+        }
+    }
+
+    # Fallback for a file without bracketed options; should not happen in practice.
+    if ($Name -match 'zh' -or $Name -eq 'report') { return 'xelatex' }
     return 'pdflatex'
 }
 
@@ -136,9 +157,9 @@ if ($Watch -and $names.Count -gt 1) {
 $hasLatexmk = [bool](Get-Command latexmk -ErrorAction SilentlyContinue)
 
 foreach ($name in $names) {
-    $engine = Get-Engine $name
     $workDir = if ($name -eq 'starter') { Join-Path $root 'starter' } else { $root }
     $file = if ($name -eq 'starter') { 'report' } else { $name }
+    $engine = Get-Engine $file $workDir
 
     Push-Location $workDir
     $oldInputs = $env:TEXINPUTS

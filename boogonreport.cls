@@ -15,7 +15,7 @@
 %%  编译：英文 pdflatex，中文 xelatex（类里会检查并报错提示）。
 %% ============================================================================
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{boogonreport}[2026/10/22 v1.0.0 Boogon technical report]
+\ProvidesClass{boogonreport}[2026/10/22 v1.0.1 Boogon technical report]
 
 %% ------------------------------ 选项 ---------------------------------------
 \newif\ifbg@zh
@@ -129,7 +129,11 @@
     \setmainfont{TeX Gyre Pagella}
   \fi
   \setsansfont{TeX Gyre Heros}[Scale=0.88]
-  \setmonofont{Latin Modern Mono}[Scale=0.92]
+  %% 等宽字体没有粗体字重。代码块里被高亮成加粗的关键字（bash 的 cd / echo 等）
+  %% 会触发「Font shape .../b/n undefined」；把粗体指回常规字重，视觉不变，只是
+  %% 不再报警。
+  \setmonofont{Latin Modern Mono}[Scale=0.92,
+                                  BoldFont={lmmono10-regular.otf}]
 \fi
 
 %% ------------------------------ 版面 ---------------------------------------
@@ -261,6 +265,11 @@
 
 \ifbg@numbered\else\setcounter{secnumdepth}{0}\fi
 
+%% 目录默认只到二级。这个类面向 8--20 页的报告，把 3.1.1 这类标题也排进目录，
+%% 目录会溢到第二页、末尾孤零零剩一行。需要更深时在导言区写
+%% \setcounter{tocdepth}{3}。
+\setcounter{tocdepth}{2}
+
 \renewcommand{\maketitle}{%
   \begingroup
   \thispagestyle{bgfirst}%
@@ -305,7 +314,14 @@
 \titleformat{\section}{\large\bfseries\color{bgink}}{\thesection.}{0.55em}{#1}
 \titleformat{name=\section,numberless}{\large\bfseries\color{bgink}}{}{0em}{#1}
 \titleformat{\subsection}{\bfseries\color{bgink}}{\thesubsection.}{0.5em}{#1}
-\titleformat{\subsubsection}{\bfseries\itshape}{\thesubsubsection.}{0.5em}{#1}
+%% 中文没有真正的斜体，SimSun 也没有粗斜体：三级标题再叠 \itshape 只会让
+%% XeLaTeX 退化成粗体正体并报「Font shape .../b/it undefined」。中文只用粗体，
+%% 英文保留斜体以示层级。
+\ifbg@zh
+  \titleformat{\subsubsection}{\bfseries}{\thesubsubsection.}{0.5em}{#1}
+\else
+  \titleformat{\subsubsection}{\bfseries\itshape}{\thesubsubsection.}{0.5em}{#1}
+\fi
 \titlespacing*{\section}{0pt}{2.4ex plus 4pt minus 3pt}{5pt}
 \titlespacing*{\subsection}{0pt}{2.0ex plus 3pt minus 2pt}{2pt}
 \titlespacing*{\subsubsection}{0pt}{1.8ex plus 2pt minus 1.5pt}{2pt}
@@ -403,9 +419,16 @@
   \Crefname{table}{表}{表}
   \crefname{section}{节}{节}
   \Crefname{section}{节}{节}
+  \crefname{subsection}{节}{节}
+  \Crefname{subsection}{节}{节}
+  \crefname{subsubsection}{节}{节}
+  \Crefname{subsubsection}{节}{节}
+  \crefname{equation}{式}{式}
+  \Crefname{equation}{式}{式}
   \crefname{appendix}{附录}{附录}
   \Crefname{appendix}{附录}{附录}
-  %% 中文习惯是「第 3 节」而不是「节 3」，用专门的宏保证语序与超链接
+  %% 中文习惯是「第 3 节」而不是「节 3」。\cref 只能给出「节 1.1」这种语序，
+  %% 所以按节引用一律用 \secref（它对任何层级都成立）；\cref 留给图、表与公式。
   \newcommand{\secref}[1]{第~\ref{#1}~节}
   \newcommand{\appref}[1]{附录~\ref{#1}}
 \else
