@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+env:
+  # TeX Live 全量镜像：包含 ctex、pgfplots、fandol 等本模板依赖
+  TEXLIVE_IMAGE: ghcr.io/xu-cheng/texlive-full:latest
+
 jobs:
   build:
     name: ${{ matrix.job }}
@@ -19,30 +23,28 @@ jobs:
       matrix:
         include:
           - job: main-en
-            root: main-en.tex
-            xelatex: false
+            source: main-en.tex
+            engine: -pdf
           - job: main-zh
-            root: ci-build-zh.tex
-            xelatex: true
+            source: ci-build-zh.tex
+            engine: -xelatex
     steps:
       - uses: actions/checkout@v4
 
       # 中文任务通过类选项注入 fandol 字体集：Fandol 随 TeX Live 分发，
       # 因此不依赖宿主系统是否装了宋体/黑体。
       - name: Prepare portable Chinese build
-        if: matrix.xelatex
+        if: matrix.job == 'main-zh'
         run: |
           printf '%s\n' \
             '\PassOptionsToClass{fandol}{boogonreport}%' \
             '\input{main-zh.tex}' > ci-build-zh.tex
 
       - name: Compile
-        uses: xu-cheng/latex-action@v3
+        uses: docker://ghcr.io/xu-cheng/texlive-full:latest
         with:
-          root_file: ${{ matrix.root }}
-          latexmk_use_xelatex: ${{ matrix.xelatex }}
-          latexmk_shell_escape: false
-          args: -interaction=nonstopmode -halt-on-error -file-line-error
+          entrypoint: latexmk
+          args: ${{ matrix.engine }} -bibtex -interaction=nonstopmode -halt-on-error -file-line-error ${{ matrix.source }}
 
       - name: Normalize output name
         run: |
