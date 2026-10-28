@@ -1,3 +1,5 @@
+# Part of the Cooper Intelligence technical report template.
+# Distributed under the LaTeX Project Public License 1.3c or later; see LICENSE.
 """Convert a text wordmark into vector outlines and write it as SVG.
 
 The output contains no <text> elements. Every glyph is emitted as <path> data, so

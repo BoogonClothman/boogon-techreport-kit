@@ -1,3 +1,26 @@
+%% boogonreport.cls
+%% Copyright 2026 Cooper Intelligence
+%
+% This work may be distributed and/or modified under the conditions of
+% the LaTeX Project Public License, either version 1.3c of this license
+% or (at your option) any later version.
+% The latest version of this license is in
+%   https://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Cooper Intelligence.
+%
+% This work consists of the files boogonreport.cls, sample/main.tex,
+% sample/sections/*.tex, sample/refs.bib, scripts/svg-wordmark.py,
+% README.md, NOTICE.md and the derived file sample/main.pdf.
+%
+% The layout derives from the LaTeX class distributed with the e-print of
+% arXiv:2412.19437; see NOTICE.md. The wordmark in logo/ is a trademark of
+% Cooper Intelligence and is not covered by the LPPL.
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{boogonreport} % fork of deepseek.cls (arXiv:2412.19437 e-print)
 

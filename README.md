@@ -71,8 +71,9 @@ Four changes are enough for a first report, and none of them touch the layout co
 4. **Copyright wording.** `\reportorg` feeds the footer, so the line becomes
    `© <year> <your organisation>. All rights reserved` automatically.
 
-Renaming the class itself is optional, and only worth doing if you intend to publish it as your
-own package: change the file name and the `\ProvidesClass{...}` line together.
+Renaming the class itself is only needed if you redistribute a modified version: the LPPL asks
+such a version to identify itself as modified, which in practice means renaming the class file
+and its `\ProvidesClass{...}` line together. Private use of a modified copy needs no rename.
 
 ## The wordmark
 
@@ -112,3 +113,13 @@ The class is a fork of the typesetting layer used for the DeepSeek-V3 technical 
 (arXiv:2412.19437). That paper's content has been removed from this repository; only the layout
 layer was kept, and the identity block was rebuilt. See `NOTICE.md` for the attribution and for
 the review item that applies if the template is redistributed outside an organisation.
+
+## License
+
+Released under the **LaTeX Project Public License 1.3c** (or any later version). You may use,
+modify and redistribute this template, including inside another organisation; a modified version
+that you distribute must identify itself as modified and state what changed. The full text is in
+[`LICENSE`](LICENSE), and [`NOTICE.md`](NOTICE.md) records the upstream attribution.
+
+The Cooper Intelligence wordmark in `logo/` is a trademark of Cooper Intelligence and is not
+covered by the LPPL — replace it with your own mark.
