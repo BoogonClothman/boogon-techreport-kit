@@ -1,0 +1,57 @@
+\documentclass[11pt, a4paper, logo, copyright]{boogonreport}
+
+% ---------------------------------------------------------------
+%  Packages used by this sample on top of the class
+% ---------------------------------------------------------------
+\usepackage[authoryear, round]{natbib}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+\usepackage{tcolorbox}
+
+% ---------------------------------------------------------------
+%  Branding hooks  (the only block a report author must touch)
+% ---------------------------------------------------------------
+\renewcommand{\reportorg}{Cooper Intelligence}
+\renewcommand{\reportshorttitle}{Cooper Intelligence Technical Report}
+\renewcommand{\reportlogo}{../logo/cooper-logo.pdf}
+
+\title{\centering The Cooper Intelligence Technical Report:\\ Template and Style Guide}
+
+\author[*]{
+Cooper Intelligence\\
+\small under the guidance of Boogon\\
+\small \texttt{official@boogon.com}
+}
+
+\keywords{technical report; house style; typography; template; release process}
+
+\begin{abstract}
+This document is at once the reference example of the Cooper Intelligence technical-report
+class and its usage guide. It documents what the template fixes, namely the identity block,
+the typographic grid and the metadata hooks, and what it deliberately leaves to authors,
+namely the argument, the evidence and the length. Every element shown here can be copied
+verbatim into a new report: front matter, numbered sections, figures, tables, displayed
+mathematics, citations, an appendix and the copyright line.
+\end{abstract}
+
+\begin{document}
+
+\maketitle
+
+\reporttoc
+
+\input{sections/01-purpose}
+\input{sections/02-anatomy}
+\input{sections/03-typography}
+\input{sections/04-elements}
+\input{sections/05-recipes}
+\input{sections/06-release}
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\appendix
+\input{sections/07-appendix}
+
+\end{document}

@@ -1,0 +1,62 @@
+\section{Document Anatomy}
+\label{sec:anatomy}
+
+A Cooper report has exactly two page types: a first page that carries the identity block, and
+running pages that carry only furniture. Understanding the split is enough to typeset a report
+correctly.
+
+The class itself is a fork of the typesetting layer used for the DeepSeek-V3 technical report
+\citep{deepseek2024}, with the identity block replaced and the running header activated. The
+debt is deliberate: that layout was already proven on the page sizes and print runs Cooper
+cares about.
+
+\subsection{The first page}
+
+The header holds the wordmark on the left and the ISO-8601 date on the right
+(\monthyeardate\today). Below the header rule the title is set in bold at 16\,pt, followed by the author
+block and the abstract. The footer carries the copyright line at the right and, when the
+corresponding author is declared, its address at the left.
+
+The abstract is declared before \verb|\begin{document}|. This is unusual but deliberate: the
+class rewrites the \texttt{abstract} environment so that its content can be placed on the title
+block without floating, and the declaration has to happen before the document body starts.
+
+\subsection{Running pages}
+
+From page~two onwards the header is a single centred line, the short title, in 11\,pt. The
+footer carries the page number, also centred. Both are separated from the text block by a 1\,pt
+rule drawn in grey, which keeps the rule visible on screen without competing with body text on
+paper.
+
+\subsection{Metadata hooks}
+
+All organisation-specific strings are collected in five macros, so that a rebrand never touches
+the body of a report. Table~\ref{tab:hooks} lists them together with the class options that
+switch the optional parts on.
+
+\begin{table}[htbp]
+  \centering
+  \caption{The branding hooks and the class options that activate optional elements.}
+  \label{tab:hooks}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Hook or option & Rendered where & Default \\
+    \midrule
+    \verb|\reportorg|        & copyright line            & Cooper Intelligence \\
+    \verb|\reportshorttitle| & running header            & Technical Report \\
+    \verb|\reportlogo|       & first-page header         & none \\
+    \verb|\reportaddress|    & first-page footer, left   & none \\
+    \verb|\reportinternalnote| & footer when \texttt{internal} & Confidential. Internal Only. \\
+    \midrule
+    \texttt{logo}     & draws the wordmark               & off \\
+    \texttt{copyright}& draws the copyright line         & off \\
+    \texttt{address}  & draws the address line           & off \\
+    \texttt{internal} & marks the report as internal     & off \\
+    \texttt{nonumbering} & suppresses section numbers     & off \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Options are passed on the \verb|\documentclass| line. A released report enables \verb|logo|
+and \verb|copyright|; an internal draft adds \verb|internal|, which prints the confidentiality
+note in the footer.

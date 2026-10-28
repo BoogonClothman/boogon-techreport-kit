@@ -1,0 +1,56 @@
+\section{Typographic System}
+\label{sec:typography}
+
+The template uses one text family, one matching mathematics family and one monospaced family.
+That is the whole system; there is no second accent colour and no decorative element other
+than the wordmark.
+
+\subsection{Type families}
+
+Body text is set in Bitstream Charter. Charter was drawn for low-resolution printing and holds
+up unusually well at 11\,pt on coated paper, which is the medium most Cooper reports end up in.
+Mathematics is taken from the \texttt{newtx} companion set configured for Charter, so that
+symbols in a display equation do not change colour or weight relative to the surrounding
+prose. Monospaced text, used for file names, macros and code, comes from Latin Modern
+Typewriter scaled up by ten per cent to match Charter's x-height. This pairing follows the
+standard \LaTeX{} practice of matching a text face with the mathematics set drawn for it
+\citep{mittelbach2023}.
+
+\subsection{Sizes and spacing}
+
+Table~\ref{tab:sizes} records the sizes the class applies. Authors normally never set a size by
+hand: the class assigns one to each structural role, and a report that respects the roles will
+look like every other report.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Type sizes by role. All values are as set by the class.}
+  \label{tab:sizes}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Role & Size & Notes \\
+    \midrule
+    Title            & 16/20\,pt, bold    & ragged right, no automatic hyphenation \\
+    Author block     & 11/15\,pt          & affiliation line set at 13/15\,pt, bold \\
+    Abstract         & 11/12\,pt          & paragraph measure, ragged bottom \\
+    Keywords         & 11/12\,pt, italic  & appended to the abstract block \\
+    Section heading  & 13/14\,pt, bold    & number, then 0.5\,em gap \\
+    Subsection       & body size, bold    & number, then 0.5\,em gap \\
+    Subsubsection    & body size, bold italic & run-in numbering \\
+    Running header   & 11/12\,pt          & short title only \\
+    Copyright        & 7/9\,pt            & first-page footer, right \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Vertical space follows the block structure rather than the page: 0.5\,baselineskip between
+paragraphs, and 5\,pt below a section heading. The grid is fixed at 2.5\,cm side margins with
+3\,cm at the top and bottom, and the header cell is 40\,pt tall, which is what allows
+the 138\,pt wordmark to sit on the first page without pushing the title down.
+
+\subsection{Rules and captions}
+
+Header and footer rules are drawn at 1\,pt in grey, on the first page and on running pages
+alike. Captions use the pipe separator, so a caption reads \emph{Figure 1 $\vert$ The release
+path for a Cooper technical report}; the separator is a property of the class, not something an author
+types.

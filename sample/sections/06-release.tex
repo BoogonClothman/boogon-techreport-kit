@@ -1,0 +1,29 @@
+\section{Release Practice}
+\label{sec:release}
+
+A report is finished when it can be re-typeset from its sources by someone who was not involved
+in writing it. That test drives the release rules below.
+
+\subsection{Review}
+
+Release review is held by Boogon. The reviewer checks the document against the template
+conventions, not against the argument: correct class, branding hooks set, figures vectorial,
+tables free of vertical rules, every reference resolved, copyright line present. A report that
+fails these checks is returned once, with a list, rather than line-edited by the reviewer.
+
+\subsection{Versioning and archival}
+
+Each report is archived with four artefacts: the PDF, the \LaTeX{} sources, the bibliography and
+the logo assets it referenced. The archive is immutable; a correction produces a new version,
+and the version is recorded in the report's file name and cover note, since the class
+deliberately has no version field in the title block.
+
+Template changes are released separately from reports. Because a report pins the class it was
+built with, a change to the template does not silently alter an already published document.
+
+\subsection{When the template changes}
+
+A change to the class file requires two things: this sample must still build without
+modification, and any new hook must be documented in Section~\ref{sec:anatomy}. If a change
+alters how an existing report renders, it is a breaking change and the previous class file is
+kept alongside the new one until the archived reports no longer need it.

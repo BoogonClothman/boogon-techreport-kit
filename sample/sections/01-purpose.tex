@@ -1,0 +1,44 @@
+\section{Purpose and Scope}
+\label{sec:purpose}
+
+Cooper Intelligence publishes technical reports for two audiences at once: clients who need a
+defensible account of a design or a method, and internal teams who need to reuse the reasoning
+later. When every team formats its own PDF, the organisation ends up with documents that look
+like they come from different companies. This template exists to remove that variance without
+touching the substance of what teams write.
+
+The template is published under the guidance of Boogon, which owns the release review. A report
+that leaves the organisation therefore passes two gates: the author's technical review, and a
+Boogon editorial check for conformance with the conventions described here.
+
+\subsection{What the template fixes}
+
+Three things are fixed, and authors should not override them in individual reports:
+
+\begin{itemize}
+  \item \textbf{Identity.} The wordmark, organisation name, corresponding contact and the
+        copyright line. These are set once through the branding hooks in
+        Section~\ref{sec:anatomy}.
+  \item \textbf{Grid.} A4 paper, a single column, 2.5\,cm side margins and 3\,cm top and bottom
+        margins. The measure lands near 90 characters, which is wide enough for tables and
+        narrow enough for sustained reading.
+  \item \textbf{Running furniture.} The short title in the running header, the page number in
+        the footer, and the grey rules above and below the text block.
+\end{itemize}
+
+\subsection{What the template leaves open}
+
+Section structure, length, tone, the choice between prose and bullet lists, and the amount of
+mathematics are editorial decisions. The template provides machinery, not a house argument.
+A three-page note and a thirty-page study use the same class and should both look deliberate.
+
+\subsection{Scope of the current release}
+
+This release covers English-language reports. Chinese-language typesetting is out of scope for
+the present version: the class is built on \texttt{extarticle} with a Latin font stack, and a
+credible Chinese edition requires a different font and line-breaking configuration rather than
+a translation of this document.
+
+Reports produced with the template are distributed as PDF, always accompanied by their \LaTeX{}
+sources. The sources matter because a report is expected to remain reproducible years after its
+publication, when neither the author nor the original tooling is available.

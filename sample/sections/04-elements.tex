@@ -1,0 +1,74 @@
+\section{Figures, Tables and Displayed Mathematics}
+\label{sec:elements}
+
+The three element types below cover most reports. They are shown once, correctly, so that a new
+author can copy the pattern rather than reconstruct it.
+
+\subsection{Figures}
+
+Figures are centred, float by default, and carry a caption below. Vector output is expected:
+a PDF produced by a plotting tool, or a diagram drawn in Ti\emph{k}Z as in
+Figure~\ref{fig:pipeline}. Raster images are acceptable only for screenshots, and then at a
+resolution that survives print.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+      node distance=9mm,
+      stage/.style={draw, rounded corners=2pt, semithick, minimum height=9mm,
+                    minimum width=27mm, align=center, font=\small},
+      arrow/.style={-{Latex[length=2mm]}, semithick}
+    ]
+    \node[stage] (draft)  {Draft};
+    \node[stage, right=of draft]  (review) {Boogon\\review};
+    \node[stage, right=of review] (typeset) {Typeset};
+    \node[stage, right=of typeset] (release) {Release};
+    \draw[arrow] (draft) -- (review);
+    \draw[arrow] (review) -- (typeset);
+    \draw[arrow] (typeset) -- (release);
+  \end{tikzpicture}
+  \caption{The release path for a Cooper technical report. Editorial review sits between
+  drafting and typesetting, so that a report is never typeset twice for the same objection.}
+  \label{fig:pipeline}
+\end{figure}
+
+\subsection{Tables}
+
+Tables use \texttt{booktabs} rules and no vertical lines; the caption goes above. Numbers are
+aligned on the decimal, and units are stated in the column head, never repeated in every cell.
+Table~\ref{tab:conformance} is the smallest complete example.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Conformance of a report to the template, by section, for a recent review cycle.}
+  \label{tab:conformance}
+  \begin{tabular}{@{}lrr@{}}
+    \toprule
+    Section & Checks run & Conformant (\%) \\
+    \midrule
+    Front matter        & 14 & 100.0 \\
+    Body sections       & 63 & 96.8 \\
+    Figures and tables  & 22 & 90.9 \\
+    References          &  9 & 100.0 \\
+    \midrule
+    Total               & 108 & 96.3 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Displayed mathematics}
+
+Equations are numbered, and every symbol is defined in the surrounding prose. A conformance
+rate, for instance, can be written as
+\begin{equation}
+  \label{eq:conformance}
+  \mathcal{C} = \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}\!\left[\, d_i \le \tau \,\right],
+\end{equation}
+where $d_i$ is the deviation of check $i$ from its expected value, $\tau$ is the tolerance
+agreed during review, and $\mathbf{1}[\cdot]$ is the indicator function. Equation
+\eqref{eq:conformance} is quoted in the review summary; it is also the quantity that
+Table~\ref{tab:conformance} reports in percent.
+
+Inline mathematics follows the same font. A tolerance of $\tau = 0.05$ is typical for
+typographic checks. The treatment of floats and cross-references used here follows the
+standard account in \citet{lamport1994}.
