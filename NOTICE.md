@@ -32,12 +32,14 @@ this repository and is not reproduced here.
 
 The upstream e-print is available from arXiv at <https://arxiv.org/abs/2412.19437>.
 
-## Review item before external redistribution
+## Provenance note
 
-The upstream LaTeX source carries no explicit licence statement. Publishing the derived class
-outside the organisation, for example as an open-source package, should therefore be reviewed
-against the upstream terms before release. Internal use to typeset Cooper and Boogon documents
-is unaffected by this note.
+The upstream LaTeX source carries no explicit licence statement. The licence in `LICENSE` covers
+the work as it is maintained in this repository, including the changes made to the layout layer;
+it cannot grant rights in material the upstream authors did not license. An organisation that
+needs certainty about the provenance of the layout layer, for example before depending on this
+template commercially, should review the upstream terms itself. This remains an open item rather
+than a settled one.
 
 ## Marks and assets
 
